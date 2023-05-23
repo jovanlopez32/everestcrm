@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function (){
 
 
 /* Manager Controller */
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'admin')->group(function () {
     Route::get('/usuarios', [ManagerController::class, 'viewUsers'])->name('users.view');
     Route::post('/storeuser', [ManagerController::class, 'storeUser'])->name('users.create');
     Route::put('/edituser/{id}', [ManagerController::class, 'editUser'])->name('users.edit');

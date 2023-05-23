@@ -36,16 +36,6 @@ const submitStatus = () => {
 
 
 
-<<<<<<< HEAD
-    <div class="w-full ">
-        <h2>Lista de estados</h2>
-        <p>Los estados predefinidos son <span>Nuevo</span> <span>Por Contactar</span> <span>En Seguimiento</span></p>
-
-        <div>
-            <p>Esto es otra seccion de prueba</p>
-        </div>
-    </div>
-=======
     <div class="w-full my-5 flex justify-between items-center flex-wrap">
 
         <div>
@@ -66,7 +56,6 @@ const submitStatus = () => {
                 </button>
             </form>
         </div>
->>>>>>> main
 
 
     </div>

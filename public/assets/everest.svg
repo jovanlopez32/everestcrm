@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="96px" height="96px" viewBox="0 0 96 96" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path d="M0 0L96 0L96 96L0 96L0 0Z" id="path_1" />
+    <clipPath id="clip_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="MOUNTAIN SVG_Mesa de trabajo 1" clip-path="url(#clip_1)">
+    <path d="M0 0L96 0L96 96L0 96L0 0Z" id="MOUNTAIN-SVG_Mesa-de-trabajo-1" fill="none" fill-rule="evenodd" stroke="none" />
+    <path d="M93.06 82.23L83.16 60.33C82.67 59.24 81.18 59.08 80.46 60.03C79.77 60.95 78.37 60.85 77.82 59.84L51.73 12.31C51.14 11.24 49.62 11.22 49 12.26L26.81 49.39C26.32 50.2 25.24 50.41 24.49 49.83L20.57 46.78C19.77 46.16 18.59 46.44 18.17 47.37L2.25 82.22C1.77 83.26 2.54 84.45 3.68 84.45L91.62 84.45C92.76 84.45 93.53 83.27 93.06 82.23L93.06 82.23ZM57.49 40.69L52.15 38.68C50.54 38.08 48.77 38.09 47.17 38.71L42.19 40.66C40.8 41.2 39.47 39.77 40.1 38.42L47.81 21.98C48.55 20.4 50.79 20.38 51.56 21.95L59.59 38.36C60.26 39.73 58.91 41.22 57.49 40.68L57.49 40.69Z" id="Shape" fill="#10b981" fill-rule="evenodd" stroke="none" />
+  </g>
+</svg>

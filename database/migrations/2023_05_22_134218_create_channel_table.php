@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('channel', function (Blueprint $table) {
             $table->id();
+            $table->string('text');
             $table->timestamps();
         });
     }

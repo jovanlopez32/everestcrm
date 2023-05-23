@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/configuracion', [ManagerController::class, 'settingsData'])->name('manager.settings');
+    Route::post('/storestatus', [ManagerController::class, 'storeStatus'])->name('manager.store.status');
 
    /*  Route::get('todoslosleads', [ManagerController::class, 'allLeads'])->name('manager.allleads');
     Route::get('configuracion', [ManagerController::class], 'settingsData')->name('manager.settings'); */

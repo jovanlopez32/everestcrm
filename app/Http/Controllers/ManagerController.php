@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -77,9 +78,21 @@ class ManagerController extends Controller
 
     public function settingsData(){
 
+        $status  = DB::table('status')->get();
 
-        return Inertia::render('Manager/Settings');
+        return Inertia::render('Manager/Settings', ['status' => $status]);
+    }
 
+    public function storeStatus(Request $request){
+        DB::table('status')->insert([
+            'text' => $request->text,
+        ]);
+        return to_route('manager.settings');
+    }
+
+    public function FunctionName(Request $request)
+    {
+        return $request;
     }
 
 }

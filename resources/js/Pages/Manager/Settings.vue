@@ -21,6 +21,10 @@ import { Head, Link, useForm, usePage, router} from '@inertiajs/vue3';
     <div class="w-full ">
         <h2>Lista de estados</h2>
         <p>Los estados predefinidos son <span>Nuevo</span> <span>Por Contactar</span> <span>En Seguimiento</span></p>
+
+        <div>
+            <p>Esto es otra seccion de prueba</p>
+        </div>
     </div>
 
 

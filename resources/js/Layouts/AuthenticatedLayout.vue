@@ -6,7 +6,7 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import Push from 'push.js'
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
 
@@ -33,6 +33,10 @@ channel.bind('get-lead', function(data) {
         }
     });
 });
+
+const logOut = () => {
+    router.post('logout');
+};
 
 
 </script>
@@ -77,10 +81,10 @@ channel.bind('get-lead', function(data) {
                 <span>Configuracion</span>
             </NavLink>
 
-            <NavLink :href="route('logout')" method="post" as="button">
+            <!-- <NavLink :href="route('logout')" method="post" as="button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19.002 3h-14c-1.103 0-2 .897-2 2v4h2V5h14v14h-14v-4h-2v4c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V5c0-1.103-.898-2-2-2z"></path><path d="m11 16 5-4-5-4v3.001H3v2h8z"></path></svg>
                 <span>Cerrar sesión</span>
-            </NavLink>
+            </NavLink> -->
         </div>
 
         <div class=" self-end w-full border dark:border-zinc-100 border-neutral-900 rounded-md py-3 flex items-center justify-around">
@@ -90,13 +94,17 @@ channel.bind('get-lead', function(data) {
             <div>
                 <h1 class="text-sm font-semibold">{{ $page.props.auth.user.name }}</h1>
             </div>
-            <div class="fill-neutral-900 dark:fill-zinc-100">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path></svg>
-            </div>
+            <div class="fill-neutral-900 dark:fill-zinc-100 hover:fill-emerald-500 cursor-pointer transition-all duration-200" @click="logOut">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M12 21c4.411 0 8-3.589 8-8 0-3.35-2.072-6.221-5-7.411v2.223A6 6 0 0 1 18 13c0 3.309-2.691 6-6 6s-6-2.691-6-6a5.999 5.999 0 0 1 3-5.188V5.589C6.072 6.779 4 9.65 4 13c0 4.411 3.589 8 8 8z"></path><path d="M11 2h2v10h-2z"></path></svg>
+            </div>  
         </div>
 
+        
     </div>
 
+
+    
 
     <main class=" relative ml-0 md:ml-60 min-h-screen w-full p-5 md:py-10 md:px-5">
         <slot />

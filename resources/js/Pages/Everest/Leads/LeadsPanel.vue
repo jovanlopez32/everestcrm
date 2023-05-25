@@ -2,6 +2,7 @@
 
 import Checkbox from '@/Components/Checkbox.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/PrimaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, useForm, usePage, router} from '@inertiajs/vue3';
 import axios from 'axios';
@@ -17,6 +18,10 @@ const props = defineProps({
 const searchForm = useForm({
     name: '',
     phone: '',
+    //add
+    date_from:'',
+    date_to:'',
+    //end add
     college_degree: 'Todas las carreras',
     status: 'Todos los estados',
     'from': 'Todos los canales',
@@ -248,7 +253,26 @@ function enrolledLead(leadid){
                 </div>
             </div>
 
+            <!-- Fechas -->
+            <div class=" flex flex-wrap-reverse gap-y-2 items-center gap-x-4">
+                <label class="text-sm">Fecha desde:</label>
+                <input id="date_from" class="bg-transparent rounded-md p-0 px-3 py-1 text-xs placeholder:text-neutral-500 border-neutral-900 border-2 focus:ring-0 focus:border-emerald-500 dark:border-zinc-200 dark:placeholder:text-zinc-400" type="date" placeholder="Buscar por nombre" v-model="searchForm.date_from" >
+
+                <label class="text-sm">Fecha hasta:</label>
+                <input id="date_to" class="bg-transparent rounded-md p-0 px-3 py-1 text-xs placeholder:text-neutral-500 border-neutral-900 border-2 focus:ring-0 focus:border-emerald-500 dark:border-zinc-200 dark:placeholder:text-zinc-400" type="date" placeholder="Buscar por telefono" v-model="searchForm.date_to" >
+
+            </div>
+
         </form>
+
+        <div class="mb-3">
+            <PrimaryButton>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7 11h10v2H7zM4 7h16v2H4zm6 8h4v2h-4z"></path></svg>
+            </PrimaryButton>
+        </div>
+        
+
+        
 
 
         <div v-if="all_leads.data.length == 0">

@@ -233,7 +233,7 @@ const ok = (msj) =>{
                         </div>
                     </div>
                     <div>
-                        <h2 class="p-3 text-lg font.medium text-hray-900">{{ title }}</h2>
+                        <h2 class="p-3 text-lg font.medium text-hray-900"><strong>{{ title }}</strong></h2>
 
                         <div class="flex flex-row flex-wrap">
                             <div class="p-3 mt-1">

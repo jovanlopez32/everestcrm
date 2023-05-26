@@ -20,6 +20,10 @@ const props = defineProps({
 const searchForm = useForm({
     name: '',
     phone: '',
+    //add
+    date_from:'',
+    date_to:'',
+    //end add
     college_degree: 'Todas las carreras',
     status: 'Todos los estados',
     from: 'Todos los canales',
@@ -267,6 +271,16 @@ function enrolledLead(leadid){
                         <option class="bg-zinc-100 dark:bg-neutral-900 " value="Pagina Web">WhatsApp</option>
                     </select>
                 </div>
+            </div>
+
+            <!-- Fechas -->
+            <div class=" flex flex-wrap-reverse gap-y-2 items-center gap-x-4">
+                <label class="text-sm">Fecha desde:</label>
+                <input id="date_from" class="bg-transparent rounded-md p-0 px-3 py-1 text-xs placeholder:text-neutral-500 border-neutral-900 border-2 focus:ring-0 focus:border-emerald-500 dark:border-zinc-200 dark:placeholder:text-zinc-400" type="date" placeholder="Buscar por nombre" v-model="searchForm.date_from" >
+
+                <label class="text-sm">Fecha hasta:</label>
+                <input id="date_to" class="bg-transparent rounded-md p-0 px-3 py-1 text-xs placeholder:text-neutral-500 border-neutral-900 border-2 focus:ring-0 focus:border-emerald-500 dark:border-zinc-200 dark:placeholder:text-zinc-400" type="date" placeholder="Buscar por telefono" v-model="searchForm.date_to" >
+
             </div>
 
         </form>

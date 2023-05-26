@@ -54,34 +54,7 @@ class EverestController extends Controller
         $st_filter = $filter->status == 'Todos los estados' ? '%' : $filter->status;
         $fr_filter = $filter->from == 'Todos los canales' ? '%' : $filter->from;
 
-<<<<<<< HEAD
         $all_leads = Auth::user()->leads()->where('college_degree', 'like', $cd_filter)->where('status', 'like', $st_filter)->where('from', 'like', $fr_filter)->where('name', 'like', $nm_filter)->where('phone', 'like', $pn_filter)->latest()->with('notes')->paginate(60);
-=======
-        //add
-        $df_filter = $filter->date_from == null ? null : $filter->date_from; 
-        //$dt_filter = $filter->date_to == null ? null : $filter->date_to; 
-        $dt_filter = $filter->date_to == null ? null : date('Y-m-d', strtotime('+1 day', strtotime($filter->date_to))); 
-        //end add
-
-        //original
-        
-        if($df_filter != null && $dt_filter != null)
-        {
-            $all_leads = Auth::user()->leads()->whereBetween('created_at', [$df_filter, $dt_filter])->where('college_degree', 'like', $cd_filter)->where('status', 'like', $st_filter)->where('from', 'like', $fr_filter)->where('name', 'like', $nm_filter)->where('phone', 'like', $pn_filter)->latest()->with('notes')->paginate(10);
-        }
-        else
-            if($df_filter != null && $dt_filter == null)
-            {
-                $all_leads = Auth::user()->leads()->where('created_at', 'LIKE', '%'.$df_filter.'%')->where('college_degree', 'like', $cd_filter)->where('status', 'like', $st_filter)->where('from', 'like', $fr_filter)->where('name', 'like', $nm_filter)->where('phone', 'like', $pn_filter)->latest()->with('notes')->paginate(10);
-                
-            }else
-                if($df_filter == null && $dt_filter == null)
-            {
-                $all_leads = Auth::user()->leads()->where('college_degree', 'like', $cd_filter)->where('status', 'like', $st_filter)->where('from', 'like', $fr_filter)->where('name', 'like', $nm_filter)->where('phone', 'like', $pn_filter)->latest()->with('notes')->paginate(10);
-            }
-       
-
->>>>>>> main
 
         $filter->session()->put('leads_filter', $all_leads);
 

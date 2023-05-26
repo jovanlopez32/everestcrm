@@ -17,10 +17,7 @@ class GuestController extends Controller
 
         /* Limpiamos el numero celular */
         $phone_clean = preg_replace("/[^0-9]/", "", $data->phone);
-
         $phone = substr($phone_clean, -10);
-
-
         $checklead = Lead::where('phone', $phone)->exists();
 
         if($checklead == true){

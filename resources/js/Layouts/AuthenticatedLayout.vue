@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
@@ -39,15 +39,20 @@ const logOut = () => {
 };
 
 
+const openNav = ref(false);
+
+const classNav = computed(() =>
+    openNav.value ? 'fixed min-h-screen w-60 flex flex-col justify-between translate-x-0 md:translate-x-0 bg-zinc-100 dark:bg-neutral-900 px-4 z-50 pt-5 pb-10 transition-all duration-200' : 'fixed min-h-screen w-60 flex flex-col justify-between -translate-x-full md:translate-x-0 bg-zinc-100 dark:bg-neutral-900 px-4 z-50 pt-5 pb-10 transition-all duration-200'
+);
+
+
 </script>
 
 <template>
 
-<div class="flex bg-zinc-200 dark:bg-neutral-800 w-full text-neutral-900 dark:text-zinc-100">
+<div class=" relative flex bg-zinc-200 dark:bg-neutral-800 w-full text-neutral-900 dark:text-zinc-100">
 
-    <div id="sidebar" class="fixed min-h-screen w-60 flex flex-col justify-between -translate-x-full md:translate-x-0 bg-zinc-100 dark:bg-neutral-900 px-4 z-50 pt-5 pb-10">
-
-
+    <div id="sidebar" :class="classNav">
 
         <div>
 
@@ -98,26 +103,30 @@ const logOut = () => {
             </NavLink> -->
         </div>
 
-        <div class=" self-end w-full border dark:border-zinc-100 border-neutral-900 rounded-md py-3 flex items-center justify-around">
+        <div class=" self-end w-full border dark:border-zinc-100 border-neutral-900 rounded-md py-3 flex items-center justify-around ">
             <div class="w-8 h-8 rounded-full bg-neutral-900 dark:bg-zinc-200 flex items-center justify-center">
                 <span class="text-zinc-100 dark:text-neutral-900 text-xs font-semibold">{{ $page.props.auth.user.name.slice(0, 1) }}</span>
             </div>
             <div>
                 <h1 class="text-sm font-semibold">{{ $page.props.auth.user.name }}</h1>
             </div>
-            <div class="fill-neutral-900 dark:fill-zinc-100 hover:fill-emerald-500 cursor-pointer transition-all duration-200" @click="logOut">
-
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M12 21c4.411 0 8-3.589 8-8 0-3.35-2.072-6.221-5-7.411v2.223A6 6 0 0 1 18 13c0 3.309-2.691 6-6 6s-6-2.691-6-6a5.999 5.999 0 0 1 3-5.188V5.589C6.072 6.779 4 9.65 4 13c0 4.411 3.589 8 8 8z"></path><path d="M11 2h2v10h-2z"></path></svg>
-            </div>  
+            <div class="fill-neutral-900 dark:fill-zinc-100 hover:fill-emerald-600 cursor-pointer transition-all duration-200" @click="logOut">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" ><path d="M16 13v-2H7V8l-5 4 5 4v-3z"></path><path d="M20 3h-9c-1.103 0-2 .897-2 2v4h2V5h9v14h-9v-4H9v4c0 1.103.897 2 2 2h9c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2z"></path></svg>
+            </div>
         </div>
 
-        
+
+
+
+    </div>
+
+    <div @click="openNav = !openNav" class="fixed cursor-pointer bg-neutral-900 right-4 bottom-4 w-16 h-16 rounded-full flex items-center justify-center fill-zinc-100 z-50 opacity-100 lg:opacity-0 transition-all duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" ><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path></svg>
     </div>
 
 
-    
-
     <main class=" relative ml-0 md:ml-60 min-h-screen w-full p-5 md:py-10 md:px-5">
+
         <slot />
     </main>
 

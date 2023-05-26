@@ -49,6 +49,8 @@ Route::middleware('auth')->group(function (){
     Route::post('/createnote', [EverestController::class, 'storeNote'])->name('notes.create');
     Route::post('/addfollowup', [EverestController::class, 'storeFollowUpLead'])->name('leads.follow_up');
     Route::post('/storecardpayment', [EverestController::class, 'storeCardPayment'])->name('card.store');
+
+    Route::post('/deletelead', [EverestController::class, 'deleteLead'])->name('lead.destroy');
 });
 
 

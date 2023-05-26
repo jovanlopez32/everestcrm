@@ -61,7 +61,7 @@ class EverestController extends Controller
         //end add
 
         //original
-
+        
         if($df_filter != null && $dt_filter != null)
         {
             $all_leads = Auth::user()->leads()->whereBetween('created_at', [$df_filter, $dt_filter])->where('college_degree', 'like', $cd_filter)->where('status', 'like', $st_filter)->where('from', 'like', $fr_filter)->where('name', 'like', $nm_filter)->where('phone', 'like', $pn_filter)->latest()->with('notes')->paginate(10);
@@ -79,7 +79,6 @@ class EverestController extends Controller
 
         $filter->session()->put('leads_filter', $all_leads);
 
-        //return $dt_filter;
         return to_route('leads.panel');
     }
 
@@ -271,6 +270,31 @@ class EverestController extends Controller
 
 
         return $lead;
+    }
+
+    public function deleteLead(Request $request)
+    {
+        //$lead = Lead::find($request->id);
+
+        //
+        
+        $id = $request->input('id');
+        $phone = $request->input('phone');
+
+        $lead = Lead::where('id', $id)->where('phone', $phone)->first();
+        
+        /* 
+        if($lead)
+        {
+            
+        }
+        */
+
+        //return $lead;
+       
+        $lead->delete();
+
+        return to_route('manager.settings');
     }
 
 }

@@ -17,7 +17,7 @@ return new class extends Migration
 
             /* Leads One to Many Relationship */
             $table->unsignedBigInteger('lead_id')->nullable();
-            $table->foreign('lead_id')->references('id')->on('leads');
+            $table->foreign('lead_id')->references('id')->on('leads')->onDelete('cascade');
             $table->timestamps();
 
         });

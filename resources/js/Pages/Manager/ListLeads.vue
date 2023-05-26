@@ -2,6 +2,7 @@
 
 import Checkbox from '@/Components/Checkbox.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, useForm, usePage, router} from '@inertiajs/vue3';
 import axios from 'axios';
@@ -20,6 +21,10 @@ const props = defineProps({
 const searchForm = useForm({
     name: '',
     phone: '',
+    //add
+    date_from:'',
+    date_to:'',
+    //end add
     college_degree: 'Todas las carreras',
     status: 'Todos los estados',
     from: 'Todos los canales',
@@ -100,6 +105,10 @@ function enrolledLead(leadid){
        router.reload( { only: ['all_leads'] }, { preserveState: true }, { preserveScroll: true });
     });
 }
+
+const cleanFilters = () => {
+    router.get('panelleads');
+};
 
 </script>
 
@@ -269,7 +278,23 @@ function enrolledLead(leadid){
                 </div>
             </div>
 
+            <!-- Fechas -->
+            <div class=" flex flex-wrap-reverse gap-y-2 items-center gap-x-4">
+                <label class="text-sm">Fecha desde:</label>
+                <input id="date_from" class="bg-transparent rounded-md p-0 px-3 py-1 text-xs placeholder:text-neutral-500 border-neutral-900 border-2 focus:ring-0 focus:border-emerald-500 dark:border-zinc-200 dark:placeholder:text-zinc-400" type="date" placeholder="Buscar por nombre" v-model="searchForm.date_from" >
+
+                <label class="text-sm">Fecha hasta:</label>
+                <input id="date_to" class="bg-transparent rounded-md p-0 px-3 py-1 text-xs placeholder:text-neutral-500 border-neutral-900 border-2 focus:ring-0 focus:border-emerald-500 dark:border-zinc-200 dark:placeholder:text-zinc-400" type="date" placeholder="Buscar por telefono" v-model="searchForm.date_to" >
+
+            </div>
+
         </form>
+
+        <div class="mb-3">
+            <SecondaryButton @click="cleanFilters">
+                <label>Limpiar filtros </label><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 16c1.671 0 3-1.331 3-3s-1.329-3-3-3-3 1.331-3 3 1.329 3 3 3z"></path><path d="M20.817 11.186a8.94 8.94 0 0 0-1.355-3.219 9.053 9.053 0 0 0-2.43-2.43 8.95 8.95 0 0 0-3.219-1.355 9.028 9.028 0 0 0-1.838-.18V2L8 5l3.975 3V6.002c.484-.002.968.044 1.435.14a6.961 6.961 0 0 1 2.502 1.053 7.005 7.005 0 0 1 1.892 1.892A6.967 6.967 0 0 1 19 13a7.032 7.032 0 0 1-.55 2.725 7.11 7.11 0 0 1-.644 1.188 7.2 7.2 0 0 1-.858 1.039 7.028 7.028 0 0 1-3.536 1.907 7.13 7.13 0 0 1-2.822 0 6.961 6.961 0 0 1-2.503-1.054 7.002 7.002 0 0 1-1.89-1.89A6.996 6.996 0 0 1 5 13H3a9.02 9.02 0 0 0 1.539 5.034 9.096 9.096 0 0 0 2.428 2.428A8.95 8.95 0 0 0 12 22a9.09 9.09 0 0 0 1.814-.183 9.014 9.014 0 0 0 3.218-1.355 8.886 8.886 0 0 0 1.331-1.099 9.228 9.228 0 0 0 1.1-1.332A8.952 8.952 0 0 0 21 13a9.09 9.09 0 0 0-.183-1.814z"></path></svg>
+            </SecondaryButton>
+        </div>
 
 
         <div v-if="all_leads.data.length == 0">

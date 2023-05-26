@@ -11,7 +11,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\DB;
 
 class EverestController extends Controller
 {
@@ -35,13 +34,13 @@ class EverestController extends Controller
 
     public function leadsPanel(Request $filter){
 
-        $all_leads = Auth::user()->leads()->where('status', '!=', 'nuevo')->latest()->with('notes')->paginate(10);
+        $all_leads = Auth::user()->leads()->where('status', '!=', 'nuevo')->latest()->with('notes')->paginate(30);
 
         if($filter->session()->get('leads_filter') != null){
             $all_leads = $filter->session()->get('leads_filter');
             $filter->session()->put('leads_filter', null);
         }else{
-            $all_leads = Auth::user()->leads()->where('status', '!=', 'nuevo')->latest()->with('notes')->paginate(10);
+            $all_leads = Auth::user()->leads()->where('status', '!=', 'nuevo')->latest()->with('notes')->paginate(60);
         }
 
         return Inertia::render('Everest/Leads/LeadsPanel', ['all_leads' => $all_leads]);
@@ -55,6 +54,9 @@ class EverestController extends Controller
         $st_filter = $filter->status == 'Todos los estados' ? '%' : $filter->status;
         $fr_filter = $filter->from == 'Todos los canales' ? '%' : $filter->from;
 
+<<<<<<< HEAD
+        $all_leads = Auth::user()->leads()->where('college_degree', 'like', $cd_filter)->where('status', 'like', $st_filter)->where('from', 'like', $fr_filter)->where('name', 'like', $nm_filter)->where('phone', 'like', $pn_filter)->latest()->with('notes')->paginate(60);
+=======
         //add
         $df_filter = $filter->date_from == null ? null : $filter->date_from; 
         //$dt_filter = $filter->date_to == null ? null : $filter->date_to; 
@@ -79,6 +81,7 @@ class EverestController extends Controller
             }
        
 
+>>>>>>> main
 
         $filter->session()->put('leads_filter', $all_leads);
 
@@ -274,31 +277,6 @@ class EverestController extends Controller
 
 
         return $lead;
-    }
-
-    public function deleteLead(Request $request)
-    {
-        //$lead = Lead::find($request->id);
-
-        //
-        
-        $id = $request->input('id');
-        $phone = $request->input('phone');
-
-        $lead = Lead::where('id', $id)->where('phone', $phone)->first();
-        
-        /* 
-        if($lead)
-        {
-            
-        }
-        */
-
-        //return $lead;
-       
-        $lead->delete();
-
-        return to_route('manager.settings');
     }
 
 }

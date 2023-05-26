@@ -49,8 +49,6 @@ Route::middleware('auth')->group(function (){
     Route::post('/createnote', [EverestController::class, 'storeNote'])->name('notes.create');
     Route::post('/addfollowup', [EverestController::class, 'storeFollowUpLead'])->name('leads.follow_up');
     Route::post('/storecardpayment', [EverestController::class, 'storeCardPayment'])->name('card.store');
-
-    Route::post('/deletelead', [EverestController::class, 'deleteLead'])->name('lead.destroy');
 });
 
 
@@ -64,6 +62,13 @@ Route::middleware('auth', 'admin')->group(function () {
     Route::get('/configuracion', [ManagerController::class, 'settingsData'])->name('manager.settings');
     Route::post('/storestatus', [ManagerController::class, 'storeStatus'])->name('manager.store.status');
 
+
+    Route::get('/listadodeleads', [ManagerController::class, 'listLeads'])->name('manager.listleads');
+    Route::post('/searchlistleads', [ManagerController::class, 'searchlistLeads'])->name('manager.search.listleads');
+
+
+    Route::get('/agregarleads', [ManagerController::class, 'addLeads'])->name('manager.add.leads');
+    Route::post('/guardarleads', [ManagerController::class, 'storeLeadsM'])->name('manager.store.leads');
    /*  Route::get('todoslosleads', [ManagerController::class, 'allLeads'])->name('manager.allleads');
     Route::get('configuracion', [ManagerController::class], 'settingsData')->name('manager.settings'); */
 });

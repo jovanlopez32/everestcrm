@@ -2,7 +2,6 @@
 
 import Checkbox from '@/Components/Checkbox.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/PrimaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, useForm, usePage, router} from '@inertiajs/vue3';
 import axios from 'axios';
@@ -13,22 +12,22 @@ const props = defineProps({
     'all_leads' : {
         type: Object,
     },
+    'users': {
+        type: Object,
+    },
 });
 
 const searchForm = useForm({
     name: '',
     phone: '',
-    //add
-    date_from:'',
-    date_to:'',
-    //end add
     college_degree: 'Todas las carreras',
     status: 'Todos los estados',
-    'from': 'Todos los canales',
+    from: 'Todos los canales',
+    user: 'Todos los usuarios',
 });
 
 const submitSearch = () => {
-    searchForm.post(route('leads.search'), {
+    searchForm.post(route('manager.search.listleads'), {
         onFinish: () => console.log('Datos buscados con exito!'),
     });
 
@@ -66,7 +65,6 @@ const submitFollowUp = () => {
 };
 
 function modalLead(lead){
-
     axios.post('/getnotes', { idlead: lead.id }).then(response => {
         console.log(response.data);
         notes.value = response.data;
@@ -173,13 +171,13 @@ function enrolledLead(leadid){
 
                         <select v-show="lead_selected.enrolled == false" v-model="followUpForm.status_follow" class=" mt-2 mb-4  text-xs border-transparent py-0 pl-0 bg-transparent focus:ring-0 focus:border-transparent" name="" id="">
                             <option class="bg-zinc-100 dark:bg-neutral-900 " value="En Seguimiento">En Seguimiento</option>
-                        <option class="bg-zinc-100 dark:bg-neutral-900" value="Por Contactar">Por Contactar</option>
-                        <option class="bg-zinc-100 dark:bg-neutral-900" value="Promesa de Pago">Promesa de Pago</option>
-                        <option class="bg-zinc-100 dark:bg-neutral-900" value="En Pausa">En Pausa</option>
-                        <option class="bg-zinc-100 dark:bg-neutral-900" value="Descartado">Descartado</option>
-                        <option class="bg-zinc-100 dark:bg-neutral-900" value="Duplicidad">Duplicidad</option>
-                        <option class="bg-zinc-100 dark:bg-neutral-900" value="Legado">Legado</option>
-                        <option class="bg-zinc-100 dark:bg-neutral-900 " value="Inscrito">Inscrito</option>
+                            <option class="bg-zinc-100 dark:bg-neutral-900" value="Por Contactar">Por Contactar</option>
+                            <option class="bg-zinc-100 dark:bg-neutral-900" value="Promesa de Pago">Promesa de Pago</option>
+                            <option class="bg-zinc-100 dark:bg-neutral-900" value="En Pausa">En Pausa</option>
+                            <option class="bg-zinc-100 dark:bg-neutral-900" value="Descartado">Descartado</option>
+                            <option class="bg-zinc-100 dark:bg-neutral-900" value="Duplicidad">Duplicidad</option>
+                            <option class="bg-zinc-100 dark:bg-neutral-900" value="Legado">Legado</option>
+                            <option class="bg-zinc-100 dark:bg-neutral-900 " value="Inscrito">Inscrito</option>
                         </select>
 
 
@@ -213,6 +211,11 @@ function enrolledLead(leadid){
                 <input id="namephone" class="bg-transparent rounded-md p-0 px-3 py-1 text-xs placeholder:text-neutral-500 border-neutral-900 border-2 focus:ring-0 focus:border-emerald-500 dark:border-zinc-200 dark:placeholder:text-zinc-400" type="text" placeholder="Buscar por nombre" v-model="searchForm.name" >
 
                 <input id="namephone" class="bg-transparent rounded-md p-0 px-3 py-1 text-xs placeholder:text-neutral-500 border-neutral-900 border-2 focus:ring-0 focus:border-emerald-500 dark:border-zinc-200 dark:placeholder:text-zinc-400" type="text" placeholder="Buscar por telefono" v-model="searchForm.phone" >
+
+                <select v-model="searchForm.user" id="" class="dark:border-zinc-300 py-1 text-xs bg-transparent rounded-md border-2 border-neutral-900 focus:ring-0 focus:border-emerald-500">
+                    <option class="bg-zinc-100 dark:bg-neutral-900 " selected value="Todos los usuarios">Todos los usuarios</option>
+                    <option v-for="user in props.users" :value="user.id">{{ user.name }}</option>
+                </select>
 
                 <button class=" px-4 py-1 rounded-md bg-neutral-900 fill-zinc-100 hover:bg-emerald-600 dark:hover:bg-emerald-500 transition-all duration-200">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7 11h10v2H7zM4 7h16v2H4zm6 8h4v2h-4z"></path></svg>
@@ -252,6 +255,7 @@ function enrolledLead(leadid){
                         <option class="bg-zinc-100 dark:bg-neutral-900" value="Duplicidad">Duplicidad</option>
                         <option class="bg-zinc-100 dark:bg-neutral-900" value="Legado">Legado</option>
                         <option class="bg-zinc-100 dark:bg-neutral-900 " value="Inscrito">Inscrito</option>
+
                     </select>
                 </div>
                 <div>
@@ -260,30 +264,12 @@ function enrolledLead(leadid){
                         <option class="bg-zinc-100 dark:bg-neutral-900 " value="Ingresado Manualmente">Ingresado Manualmente</option>
                         <option class="bg-zinc-100 dark:bg-neutral-900 " value="Facebook Form">Facebook Form</option>
                         <option class="bg-zinc-100 dark:bg-neutral-900 " value="Pagina Web">Pagina Web</option>
+                        <option class="bg-zinc-100 dark:bg-neutral-900 " value="Pagina Web">WhatsApp</option>
                     </select>
                 </div>
             </div>
 
-            <!-- Fechas -->
-            <div class=" flex flex-wrap-reverse gap-y-2 items-center gap-x-4">
-                <label class="text-sm">Fecha desde:</label>
-                <input id="date_from" class="bg-transparent rounded-md p-0 px-3 py-1 text-xs placeholder:text-neutral-500 border-neutral-900 border-2 focus:ring-0 focus:border-emerald-500 dark:border-zinc-200 dark:placeholder:text-zinc-400" type="date" placeholder="Buscar por nombre" v-model="searchForm.date_from" >
-
-                <label class="text-sm">Fecha hasta:</label>
-                <input id="date_to" class="bg-transparent rounded-md p-0 px-3 py-1 text-xs placeholder:text-neutral-500 border-neutral-900 border-2 focus:ring-0 focus:border-emerald-500 dark:border-zinc-200 dark:placeholder:text-zinc-400" type="date" placeholder="Buscar por telefono" v-model="searchForm.date_to" >
-
-            </div>
-
         </form>
-
-        <div class="mb-3">
-            <PrimaryButton>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7 11h10v2H7zM4 7h16v2H4zm6 8h4v2h-4z"></path></svg>
-            </PrimaryButton>
-        </div>
-        
-
-        
 
 
         <div v-if="all_leads.data.length == 0">
@@ -295,7 +281,7 @@ function enrolledLead(leadid){
                 </div>
             </div>
         </div>
-        <div @click="modalLead(lead)" v-for="(lead, index) in all_leads.data" class="py-2 grid grid-cols-2 lg:grid-cols-5 text-xs border-b border-black hover:cursor-pointer dark:border-zinc-100" :class="{'border-t': index == 0}">
+        <div @click="modalLead(lead)" v-for="(lead, index) in all_leads.data" class="py-2 grid grid-cols-2 lg:grid-cols-6 text-xs border-b border-black hover:cursor-pointer dark:border-zinc-100" :class="{'border-t': index == 0}">
 
             <!-- Datos de contacto -->
             <div class=" truncate flex flex-col gap-1">
@@ -304,10 +290,17 @@ function enrolledLead(leadid){
                 <p>{{ lead.phone }}</p>
                 <p>{{ new Date(lead.created_at).toLocaleDateString("en-US", { day: "2-digit", month: "2-digit", year: "numeric",  hour: "2-digit",minute: "2-digit", }) }}</p>
             </div>
+
             <!-- Estado -->
             <div class="trucate flex flex-col items-center justify-center">
                 <p class="text-base font-semibold px-4 py-1 rounded-md" :class="{ 'bg-yellow-500' : lead.status === 'En Seguimiento', 'bg-blue-500' : lead.status === 'Por Contactar' }">{{ lead.status }}</p>
             </div>
+
+            <!-- Usuario -->
+            <div class=" hidden lg:flex items-center justify-center ">
+                <p class="text-sm">{{ lead.user.name}}</p>
+            </div>
+
             <!-- Carrera de interes -->
             <div class=" hidden lg:flex items-center justify-center ">
                 <p class="text-sm">{{ lead.college_degree }}</p>

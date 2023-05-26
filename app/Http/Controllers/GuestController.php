@@ -15,11 +15,17 @@ class GuestController extends Controller
     //
     public function sendData(Request $data){
 
-        $checklead = Lead::where('phone', $data->phone)->exists();
+        /* Limpiamos el numero celular */
+        $phone_clean = preg_replace("/[^0-9]/", "", $data->phone);
+
+        $phone = substr($phone_clean, -10);
+
+
+        $checklead = Lead::where('phone', $phone)->exists();
 
         if($checklead == true){
 
-            $lead = Lead::where('phone', $data->phone)->first();
+            $lead = Lead::where('phone', $phone)->first();
 
             $date_now = Carbon::now(); //Get the actually day.
             $created_at = Carbon::parse($lead->created_at);
@@ -53,7 +59,7 @@ class GuestController extends Controller
 
         if($checklead == true) {
 
-            $lead = Lead::where('phone', $data->phone)->first();
+            $lead = Lead::where('phone', $phone)->first();
             $user = $lead->user;
 
             $lead->count++;
@@ -74,7 +80,7 @@ class GuestController extends Controller
         $new_lead = new Lead();
 
         $new_lead->name = $data->name;
-        $new_lead->phone = $data->phone;
+        $new_lead->phone = $phone;
         $new_lead->email = $data->email;
         $new_lead->campaing = null;
         $new_lead->college_degree = $data->college_degree;

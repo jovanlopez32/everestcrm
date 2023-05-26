@@ -232,7 +232,6 @@ class FacebookWHController extends Controller
 
         return response('Nuevo lead guardado, correctamente.');
 
-
     }
 
     public function assignLead(){

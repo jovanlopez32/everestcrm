@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 
 class EverestController extends Controller
 {
@@ -273,6 +274,31 @@ class EverestController extends Controller
 
 
         return $lead;
+    }
+
+    public function deleteLead(Request $request)
+    {
+        //$lead = Lead::find($request->id);
+
+        //
+        
+        $id = $request->input('id');
+        $phone = $request->input('phone');
+
+        $lead = Lead::where('id', $id)->where('phone', $phone)->first();
+        
+        /* 
+        if($lead)
+        {
+            
+        }
+        */
+
+        //return $lead;
+       
+        $lead->delete();
+
+        return to_route('manager.settings');
     }
 
 }

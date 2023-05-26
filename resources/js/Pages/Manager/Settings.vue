@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, useForm, usePage, router} from '@inertiajs/vue3';
+import DangerButton from '@/Components/DangerButton.vue';
 
 const props = defineProps({
     'status': {
@@ -20,6 +21,21 @@ const submitStatus = () => {
         }
     });
 };
+
+const deleteForm = useForm({
+    id: '',
+    phone: '',
+});
+
+const submitLead = () => {
+    deleteForm.post(route('lead.destroy'), {
+        onFinish: () => {
+            deleteForm.id = '';
+            deleteForm.phone = '';
+        }
+    });
+};
+
 </script>
 
 
@@ -37,7 +53,6 @@ const submitStatus = () => {
 
 
     <div class="w-full my-5 flex justify-between items-center flex-wrap">
-
         <div>
             <h2 class="text-xl font-bold">Lista de estados</h2>
             <p class=" text-sm">Los estados predefinidos son:</p>
@@ -56,8 +71,6 @@ const submitStatus = () => {
                 </button>
             </form>
         </div>
-
-
     </div>
 
     <div>
@@ -65,6 +78,29 @@ const submitStatus = () => {
             <button></button><p>{{ status.text }}</p>
        </div>
     </div>
+
+    <div class="mt-4">
+        <h1 class=" font-bold text-xl">Eliminar leads</h1>
+        <p class=" text-sm">En esta sección podrás eliminar un lead ingresando el ID y número de teléfono.</p>
+    </div>
+
+    <div class="w-full my-5 flex justify-between items-center flex-wrap">
+    
+        <div>
+            <form @submit.prevent="submitLead" class=" flex gap-5">
+                <input v-model="deleteForm.id" class="px-2 py-1 bg-transparent rounded-md border-neutral-900 dark:border-zinc-100 focus:ring-emerald-500 focus:border-emerald-500 text-sm" type="text" placeholder="ID del lead" required>
+                <input v-model="deleteForm.phone" class="px-2 py-1 bg-transparent rounded-md border-neutral-900 dark:border-zinc-100 focus:ring-emerald-500 focus:border-emerald-500 text-sm" type="text" placeholder="Número de teléfono" required>
+                <DangerButton>
+                Eliminar
+                </DangerButton>
+            </form>
+        </div>
+    </div>
+
+    <!-- <button onclick="myFacebookLogin()">Login with Facebook</button> -->
+
+    
+        
 
 
 </AuthenticatedLayout>
